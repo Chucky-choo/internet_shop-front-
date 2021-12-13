@@ -1,0 +1,39 @@
+.container {
+  margin-bottom: 20px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.root {
+  min-height: 390px;
+  min-width: 300px;
+  max-width: 400px;
+  max-height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (max-width: 663px) {
+  .root {
+    margin: 0 auto;
+    width: 85%
+  }
+}
+
+
+.media {
+  transition: all 0.5s;
+  height: 500px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.cardActions {
+  display: flex;
+  justify-content: space-around;
+}
