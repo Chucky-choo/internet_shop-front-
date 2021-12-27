@@ -1,15 +1,15 @@
 import * as yup from "yup";
 
-const yupStringStandard = () => {
+const yupStringStandard = (min, max) => {
   return yup
     .string()
-    .min(3, "not enough characters")
-    .max(20, "too many characters")
+    .min(min, "not enough characters")
+    .max(max, "too many characters")
     .required("required");
 };
 
 export const Validatione = yup.object().shape({
-  name: yupStringStandard(),
+  name: yupStringStandard(2, 25),
   photos: yup.string().min(5, "not enough characters").required("required"),
   count: yup
     .number()
@@ -17,14 +17,14 @@ export const Validatione = yup.object().shape({
     .required("required")
     .positive()
     .integer(),
-  description: yupStringStandard(),
-  size: yupStringStandard(),
+  description: yupStringStandard(10, 900),
+  size: yupStringStandard(2, 16),
   weight: yup
     .string()
     .min(3, "not enough characters")
     .max(10, "too many characters")
     .nullable(),
-  color: yupStringStandard(),
+  color: yupStringStandard(3, 15),
   material: yup
     .string()
     .min(3, "not enough characters")

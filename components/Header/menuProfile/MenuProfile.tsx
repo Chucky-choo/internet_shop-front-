@@ -9,7 +9,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { classes } from "./styleMenuProfile";
 import { useAppDispatch } from "../../../redux/hooks";
-import { addUserData } from "../../../redux/slices/auth-reducer";
+import { toLogOut } from "../../../redux/slices/auth-reducer";
 
 interface IMenuProfileProps {
   open: boolean;
@@ -30,7 +30,7 @@ export const MenuProfile: NextPage<IMenuProfileProps> = ({
   const dispatch = useAppDispatch();
 
   const logOut = () => {
-    dispatch(addUserData({ userData: null, token: null }));
+    dispatch(toLogOut());
   };
 
   return (

@@ -6,7 +6,6 @@ export const ProductList: FC = () => {
   return (
     <div>
       <CardsProduct />
-      <CreateNewDish />
     </div>
   );
 };

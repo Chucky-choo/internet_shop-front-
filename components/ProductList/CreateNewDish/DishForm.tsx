@@ -5,11 +5,16 @@ import CustomizedInputBase from "../../CustomizedInputBase/CustomizedInputBase";
 
 const DishForm = ({ handleClose, nameRightBtn }) => {
   return (
-    <Form autoComplete="off">
+    <Form autoComplete="off" style={{ width: 600, padding: 14 }}>
       <CustomizedInputBase type="text" name="name" placeholder="назва" />
       <CustomizedInputBase type="text" name="photos" placeholder="imageUrl" />
       <CustomizedInputBase type="number" name="count" placeholder="кількість" />
-      <CustomizedInputBase type="text" name="description" placeholder="опис" />
+      <CustomizedInputBase
+        type="text"
+        name="description"
+        placeholder="опис"
+        multiline={true}
+      />
       <CustomizedInputBase type="text" name="weight" placeholder="вага" />
       <CustomizedInputBase type="text" name="size" placeholder="розміри" />
       <CustomizedInputBase type="text" name="color" placeholder="колір" />

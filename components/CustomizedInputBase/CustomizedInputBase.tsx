@@ -6,10 +6,16 @@ interface Props {
   type: string;
   name: string;
   placeholder: string;
+  multiline?: boolean;
 }
 
-const CustomizedInputBase: FC<Props> = (props) => {
-  const [field, meta] = useField(props);
+const CustomizedInputBase: FC<Props> = ({
+  placeholder,
+  type,
+  name,
+  multiline = false,
+}) => {
+  const [field, meta] = useField(name);
 
   const test = () => {
     if (meta.touched && meta.error) {
@@ -21,14 +27,15 @@ const CustomizedInputBase: FC<Props> = (props) => {
     <>
       <TextField
         error={test()}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         inputProps={field}
         margin="dense"
         id="name"
-        label={props.placeholder}
-        type={props.type}
+        label={placeholder}
+        type={type}
         fullWidth
         variant="standard"
+        multiline={multiline}
       />
       {meta.touched && meta.error ? (
         <>

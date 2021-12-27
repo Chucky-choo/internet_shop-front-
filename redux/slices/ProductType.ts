@@ -13,7 +13,16 @@ export interface IProduct {
   photos: string;
   size: string;
   color: string;
+  count: number;
+  description: string;
+  weight: string;
   material: string;
   price: number;
   salePrice: number;
+}
+
+export type Gender = "man" | "woman";
+
+export interface ICategory {
+  gender: Gender;
 }

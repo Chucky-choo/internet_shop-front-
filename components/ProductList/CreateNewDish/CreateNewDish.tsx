@@ -5,9 +5,11 @@ import DishForm from "./DishForm";
 import { Button, Dialog } from "@mui/material";
 import { saveNewProduct } from "../../../redux/slices/product-reducer";
 import { useAppDispatch } from "../../../redux/hooks";
+import { parseCookies } from "nookies";
 
 const CreateNewDish = () => {
   const dispatch = useAppDispatch();
+  const cookies = parseCookies();
 
   const [open, setOpen] = useState(false);
 
@@ -45,8 +47,7 @@ const CreateNewDish = () => {
             }}
             validationSchema={Validatione}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              console.log(values);
-              dispatch(saveNewProduct(values));
+              dispatch(saveNewProduct(values, cookies.token));
               setSubmitting(false);
               handleClose();
               resetForm();

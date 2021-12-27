@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -14,10 +13,12 @@ import { DialogRegister } from "./DialogAuth/DialogRegister";
 import { DialogLogin } from "./DialogAuth/DialogLogin";
 import { useAppSelector } from "../../redux/hooks";
 import { MenuProfile } from "./menuProfile/MenuProfile";
+import SwipeableTemporaryDrawer from "../drawer/Drawer";
+import { GenderSwitch } from "./genderSwitch/genderSwitch";
 
 export default function PrimarySearchAppBar() {
-  const [register, setRegister] = useState(false);
-  const [login, setLogin] = useState(false);
+  const [dialogRegisterOpen, setDialogRegister] = useState(false);
+  const [dialogLoginOpen, setDialogLogin] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -27,11 +28,11 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
-  const token = useAppSelector((store) => store.user.token);
+  const { userData } = useAppSelector((store) => store.user);
 
   const openLogin = (e): void => {
-    if (token === null) {
-      setLogin(true);
+    if (userData === null) {
+      setDialogLogin(true);
     } else {
       handleClick(e);
     }
@@ -41,15 +42,8 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <SwipeableTemporaryDrawer />
+          <GenderSwitch />
           <MyCustomTextField />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -57,14 +51,14 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
             <DialogLogin
-              open={login}
-              setLogin={setLogin}
-              setRegister={setRegister}
+              open={dialogLoginOpen}
+              setLogin={setDialogLogin}
+              setRegister={setDialogRegister}
             />
             <DialogRegister
-              open={register}
-              setRegister={setRegister}
-              setLogin={setLogin}
+              open={dialogRegisterOpen}
+              setRegister={setDialogRegister}
+              setLogin={setDialogLogin}
             />
             <MenuProfile
               anchorEl={anchorEl}

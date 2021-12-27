@@ -1,12 +1,12 @@
-import { FC } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box, CardActionArea } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 import classes from "./CardProduct.module.scss";
 import { useAppSelector } from "../../../redux/hooks";
 import Link from "next/link";
+import { PriceBox } from "../../PriceBox/PriceBox";
 
 function CardsProduct() {
   const data = useAppSelector((store) => store.product.data);
@@ -30,7 +30,6 @@ function CardsProduct() {
                 </CardActionArea>
               </a>
             </Link>
-
             <CardContent>
               <Typography gutterBottom variant="h6" component="div">
                 {name}
@@ -38,23 +37,7 @@ function CardsProduct() {
               <Typography variant="body2" color="text.secondary">
                 size: {size}
               </Typography>
-              <Box
-                sx={{
-                  minWidth: 190,
-                  display: "inline-flex",
-                  justifyContent: "space-between",
-                  alignItems: "end",
-                }}
-              >
-                {salePrice && (
-                  <Typography variant="h5" color="error">
-                    {salePrice} грн.
-                  </Typography>
-                )}
-                <Typography variant="body1" component="div">
-                  {salePrice ? <s>{price} грн.</s> : `${price} грн.`}
-                </Typography>
-              </Box>
+              <PriceBox price={price} salePrice={salePrice} />
             </CardContent>
           </Card>
         );

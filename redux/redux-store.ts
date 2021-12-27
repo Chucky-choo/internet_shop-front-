@@ -1,4 +1,4 @@
-import { configureStore, Store } from "@reduxjs/toolkit";
+import { Action, configureStore, Store, ThunkAction } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth-reducer";
 import productReducer from "./slices/product-reducer";
 import { createWrapper, Context, HYDRATE } from "next-redux-wrapper";
@@ -12,7 +12,14 @@ export const store = configureStore({
 
 const makeStore = (context: Context) => store;
 
-export const wrapper = createWrapper<Store<AppStoreType>>(makeStore);
+export const wrapper = createWrapper<Store<AppState>>(makeStore);
 
-export type AppStoreType = ReturnType<typeof store.getState>;
+export type AppStore = ReturnType<typeof makeStore>;
 export type AppDispatch = typeof store.dispatch;
+export type AppState = ReturnType<AppStore["getState"]>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action
+>;
