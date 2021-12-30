@@ -3,13 +3,12 @@ import { Formik } from "formik";
 import { Validatione } from "./Validatione";
 import DishForm from "./DishForm";
 import { Button, Dialog } from "@mui/material";
-import { saveNewProduct } from "../../../redux/slices/product-reducer";
-import { useAppDispatch } from "../../../redux/hooks";
+import { saveNewProduct } from "../../redux/slices/product-reducer";
+import { useAppDispatch } from "../../redux/hooks";
 import { parseCookies } from "nookies";
 
 const CreateNewDish = () => {
   const dispatch = useAppDispatch();
-  const cookies = parseCookies();
 
   const [open, setOpen] = useState(false);
 
@@ -24,11 +23,11 @@ const CreateNewDish = () => {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        добавити річ
+        добавити товар
       </Button>
       <Dialog
         open={open}
-        title={"Here you can create your own dish"}
+        title={"Here you can create your own commodity"}
         onClose={handleClose}
       >
         {
@@ -47,7 +46,7 @@ const CreateNewDish = () => {
             }}
             validationSchema={Validatione}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              dispatch(saveNewProduct(values, cookies.token));
+              dispatch(saveNewProduct(values));
               setSubmitting(false);
               handleClose();
               resetForm();

@@ -10,6 +10,11 @@ import s from "./DrawerList.module.scss";
 import { theme } from "../../../pages/_document";
 import { Theme } from "@emotion/react";
 import { GenderSwitch } from "../../Header/genderSwitch/genderSwitch";
+import { DeleteProduct } from "../../deleteProduct/DeleteProduct";
+import { AdminWrapper } from "../../adminWrapper/AdminWrapper";
+import { useRouter } from "next/dist/client/router";
+import CreateNewDish from "../../CreateNewDish/CreateNewDish";
+import { UpdateProduct } from "../../updateProduct/updateProduct";
 
 interface IDrawerListProps {
   anchor: Anchor;

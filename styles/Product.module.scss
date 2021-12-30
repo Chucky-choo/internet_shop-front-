@@ -10,6 +10,18 @@
   overflow: hidden;
 }
 
+.wrapper_picture {
+  margin: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.picture {
+  margin: 6px;
+  max-height: 60px;
+}
+
 .info {
   display: flex;
   justify-content: center;

@@ -5,12 +5,13 @@ export interface IUserData {
   phoneNumber: string;
   createdAt: string;
   updateAt: string;
+  roles: IRole[];
 }
 
 export interface IProduct {
   id: number;
   name: string;
-  photos: string;
+  cover: string;
   size: string;
   color: string;
   count: number;
@@ -21,8 +22,28 @@ export interface IProduct {
   salePrice: number;
 }
 
+export type photo = {
+  id: number;
+  url: string;
+};
+
+export interface currentProduct extends IProduct {
+  photos: photo[];
+}
+
 export type Gender = "man" | "woman";
 
 export interface ICategory {
   gender: Gender;
+}
+
+export enum Role {
+  admin = "ADMIN",
+  user = "USER",
+}
+
+export interface IRole {
+  id: number;
+  value: Role;
+  description: string;
 }

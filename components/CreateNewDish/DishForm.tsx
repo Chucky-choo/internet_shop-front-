@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "formik";
 import { Button, Grid } from "@mui/material";
-import CustomizedInputBase from "../../CustomizedInputBase/CustomizedInputBase";
+import CustomizedInputBase from "../CustomizedInputBase/CustomizedInputBase";
 
 const DishForm = ({ handleClose, nameRightBtn }) => {
   return (

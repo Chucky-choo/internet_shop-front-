@@ -6,7 +6,7 @@ import type { AppProps } from "next/app";
 import { theme } from "./_document";
 import { addUserData } from "../redux/slices/auth-reducer";
 import nookies from "nookies";
-import { authApi } from "../api/authApi";
+import { Api } from "../api/Api";
 
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -22,18 +22,13 @@ WrappedApp.getInitialProps = wrapper.getInitialPageProps((store) =>
     if (!store.getState().user.userData) {
       try {
         const { token } = nookies.get(ctx);
-        const userData = await authApi.authorization(token);
+
+        const userData = await Api(ctx).auth.authorization();
         store.dispatch(addUserData(userData));
       } catch (e) {
-        console.log(e.response.data.message);
+        console.log(e.config.headers);
       }
     }
-
-    return {
-      pageProps: Component.getInitialProps
-        ? await Component.getInitialProps({ ...ctx, store: store })
-        : {},
-    };
   }
 );
 

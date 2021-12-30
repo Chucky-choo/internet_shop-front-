@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
-import { authApi } from "../../api/authApi";
 import { AppThunk } from "../redux-store";
 import { IUserData } from "./ProductType";
 import { HYDRATE } from "next-redux-wrapper";
+import { Api } from "../../api/Api";
+import nookies from "nookies";
 
 export const initialAuthState = {
   userData: null as IUserData | null,
@@ -37,17 +38,16 @@ export default authSlice.reducer;
 // Thunks
 const thunkCreateUser = (request) => (dto) => async (dispatch) => {
   try {
-    const userData = await request(dto);
-    dispatch(addUserData(userData.data));
+    const response = await request(dto);
+    const { userData } = response.data;
+    dispatch(addUserData(userData));
     dispatch(setErrorMessage(null));
 
     // Set
-    setCookie(null, "token", userData.data.token, {
+    setCookie(null, "token", response.data.token, {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     });
-    const cookies = parseCookies();
-    console.log(cookies.token);
 
     return "response";
   } catch (e) {
@@ -56,10 +56,14 @@ const thunkCreateUser = (request) => (dto) => async (dispatch) => {
   }
 };
 
-export const getUserData = thunkCreateUser(authApi.login);
-export const registerUser = thunkCreateUser(authApi.register);
+export const getUserData = thunkCreateUser(Api().auth.login);
+export const registerUser = thunkCreateUser(Api().auth.register);
 
 export const toLogOut = (): AppThunk => async (dispatch) => {
+  setCookie(null, "token", null, {
+    maxAge: -1,
+    path: "/",
+  });
   destroyCookie(null, "token");
   dispatch(addUserData(null));
 };

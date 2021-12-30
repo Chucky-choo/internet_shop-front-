@@ -8,11 +8,7 @@ interface IRegisterUserDto {
   basketId?: number;
 }
 
-export const instance = axios.create({
-  baseURL: "http://localhost:7777",
-});
-
-export const userApi = {
+export const userApi = (instance) => ({
   async register(dto: IRegisterUserDto) {
     const { data } = await instance.post("/users", dto);
     return data;
@@ -21,4 +17,4 @@ export const userApi = {
     const { data } = await instance.get("/users");
     return data;
   },
-};
+});

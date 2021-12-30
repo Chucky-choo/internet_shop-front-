@@ -14,7 +14,7 @@ function CardsProduct() {
   return (
     <div className={classes.container}>
       {data.map((product) => {
-        const { id, photos, size, name, salePrice, price } = product;
+        const { id, cover, size, name, salePrice, price } = product;
         return (
           <Card key={id} className={classes.root}>
             <Link href={"/product/" + id}>
@@ -24,7 +24,7 @@ function CardsProduct() {
                     className={classes.media}
                     component="img"
                     height="140"
-                    image={photos}
+                    image={cover}
                     alt={name}
                   />
                 </CardActionArea>

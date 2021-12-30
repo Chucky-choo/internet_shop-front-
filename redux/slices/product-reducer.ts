@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct, ICategory, Gender } from "./ProductType";
-import { productApi } from "../../api/ProductApi";
+import { IProduct, ICategory, Gender, currentProduct } from "./ProductType";
 import { HYDRATE } from "next-redux-wrapper";
-import { ThunkAction } from "redux-thunk";
-import { AppState, AppThunk } from "../redux-store";
+import { AppThunk } from "../redux-store";
+import { Api } from "../../api/Api";
 
 export const productSlice = createSlice({
   name: "product",
   initialState: {
     data: null as IProduct[],
     error: null as string,
-    currentProduct: null as IProduct,
+    currentProduct: null as currentProduct,
     category: { gender: "woman" } as ICategory,
   },
   reducers: {
@@ -23,7 +22,7 @@ export const productSlice = createSlice({
     setErrorMessage: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    setCurrentProduct: (state, action: PayloadAction<IProduct>) => {
+    setCurrentProduct: (state, action: PayloadAction<currentProduct>) => {
       state.currentProduct = action.payload;
     },
     setGender: (state, action: PayloadAction<Gender>) => {
@@ -59,7 +58,7 @@ export const getDataProducts = (): AppThunk => {
     console.log(getState().product.data);
     if (!getState().product.data) {
       try {
-        const data = await productApi.findAll();
+        const data = await Api().product.findAll();
         dispatch(addDataProducts(data));
       } catch (e) {
         dispatch(setErrorMessage(e.message));
@@ -68,9 +67,9 @@ export const getDataProducts = (): AppThunk => {
   };
 };
 
-export const saveNewProduct = (newProductData, token) => async (dispatch) => {
+export const saveNewProduct = (newProductData) => async (dispatch) => {
   try {
-    const newProduct = await productApi.create(newProductData, token);
+    const newProduct = await Api().product.create(newProductData);
     dispatch(addNewProduct(newProduct));
   } catch (e) {
     dispatch(setErrorMessage(e.message));
@@ -84,7 +83,7 @@ export const fetchProduct =
     let product = null;
     if (!dataProduct) {
       try {
-        product = await productApi.findById(idProduct);
+        product = await Api().product.findById(idProduct);
       } catch (e) {
         dispatch(setErrorMessage(e.response.data.message));
         return {
@@ -95,4 +94,5 @@ export const fetchProduct =
       product = dataProduct.find((item) => item.id === +idProduct);
     }
     dispatch(setCurrentProduct(product));
+    return product;
   };

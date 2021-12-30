@@ -1,14 +1,9 @@
-import axios from "axios";
-import { instance } from "./UserApi";
 import { IProduct } from "../redux/slices/ProductType";
+import { AxiosInstance } from "axios";
 
-export const productApi = {
-  async create(dto, token) {
-    const { data } = await instance.post<IProduct>("/product", dto, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+export const productApi = (instance: AxiosInstance) => ({
+  async create(dto) {
+    const { data } = await instance.post<IProduct>("/product", dto);
     return data;
   },
   async findAll() {
@@ -21,4 +16,12 @@ export const productApi = {
     console.log("request ById");
     return data;
   },
-};
+  async update(id, dto) {
+    const { data } = await instance.patch<IProduct>(`/product/${id}`, dto);
+    return data;
+  },
+  async deleteById(id) {
+    const { data } = await instance.delete(`/product/${id}`);
+    return data;
+  },
+});
