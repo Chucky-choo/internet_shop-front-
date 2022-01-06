@@ -1,23 +1,24 @@
-import { NextPage } from "next";
-import { Button, Dialog } from "@mui/material";
-import { Formik } from "formik";
-import { Validatione } from "../CreateNewDish/Validatione";
+import {NextPage} from "next";
+import {Button, Dialog} from "@mui/material";
+import {Formik} from "formik";
+import {Validatione} from "../CreateNewDish/Validatione";
 import DishForm from "../CreateNewDish/DishForm";
-import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Api } from "../../api/Api";
+import React, {useState} from "react";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {Api} from "../../api/Api";
 
 interface IUpdateProductProps {
   idProduct: number | null;
 }
 
-export const UpdateProduct: NextPage<IUpdateProductProps> = ({ idProduct }) => {
+export const UpdateProduct: NextPage<IUpdateProductProps> = ({idProduct}) => {
   const dispatch = useAppDispatch();
 
-  const { currentProduct } = useAppSelector((store) => store.product);
-  const { id, ...oldDataProduct } = currentProduct;
+  const {currentProduct} = useAppSelector((store) => store.product);
+  const {id, ...oldDataProduct} = currentProduct;
 
   const [open, setOpen] = useState(false);
+  const [photoFiles, setPhotoFiles] = useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,6 +27,8 @@ export const UpdateProduct: NextPage<IUpdateProductProps> = ({ idProduct }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const {cover, photos, ...initialValues} = oldDataProduct
 
   return (
     <div>
@@ -39,16 +42,16 @@ export const UpdateProduct: NextPage<IUpdateProductProps> = ({ idProduct }) => {
       >
         {
           <Formik
-            initialValues={oldDataProduct}
+            initialValues={initialValues}
             validationSchema={Validatione}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
+            onSubmit={(values, {setSubmitting, resetForm}) => {
               Api().product.update(idProduct, values);
               setSubmitting(false);
               handleClose();
               resetForm();
             }}
           >
-            <DishForm handleClose={handleClose} nameRightBtn={"Обновити"} />
+            <DishForm handleClose={handleClose} nameRightBtn={"Обновити"} setPhotos={setPhotoFiles}/>
           </Formik>
         }
       </Dialog>

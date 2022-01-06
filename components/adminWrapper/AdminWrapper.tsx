@@ -1,24 +1,19 @@
-import { useAppSelector } from "../../redux/hooks";
-import { Role } from "../../redux/slices/ProductType";
-import React from "react";
-import { DeleteProduct } from "../deleteProduct/DeleteProduct";
-import CreateNewDish from "../CreateNewDish/CreateNewDish";
-import { UpdateProduct } from "../updateProduct/updateProduct";
+import {useAppSelector} from "../../redux/hooks";
+import {Role} from "../../redux/slices/ProductType";
+import React, {FC} from "react";
 
-export const AdminWrapper = ({ id }) => {
+interface IAdmin {
+  children: React.ReactNode
+}
+
+export const AdminWrapper: FC<IAdmin> = ({children}) => {
   const value = useAppSelector((state) => state.user.userData?.roles[0].value);
 
-  const stopPropagation = (e) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-  };
-
-  if (!id || value !== Role.admin) {
+  if (value !== Role.admin) {
     return null;
   } else {
     return (
       <div
-        onClick={stopPropagation}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -28,9 +23,7 @@ export const AdminWrapper = ({ id }) => {
           padding: 14,
         }}
       >
-        <DeleteProduct id={+id} />
-        <CreateNewDish />
-        <UpdateProduct idProduct={+id} />
+        {children}
       </div>
     );
   }

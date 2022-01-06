@@ -1,12 +1,14 @@
 import { Action, configureStore, Store, ThunkAction } from "@reduxjs/toolkit";
 import authReducer from "./slices/auth-reducer";
 import productReducer from "./slices/product-reducer";
-import { createWrapper, Context, HYDRATE } from "next-redux-wrapper";
+import { createWrapper, Context } from "next-redux-wrapper";
+import cartReducer from "./slices/cart-reducer";
 
 export const store = configureStore({
   reducer: {
     product: productReducer,
     user: authReducer,
+    cart: cartReducer,
   },
 });
 

@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct, ICategory, Gender, currentProduct } from "./ProductType";
-import { HYDRATE } from "next-redux-wrapper";
-import { AppThunk } from "../redux-store";
-import { Api } from "../../api/Api";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {IProduct, ICategory, Gender, currentProduct, photo} from "./ProductType";
+import {HYDRATE} from "next-redux-wrapper";
+import {AppThunk} from "../redux-store";
+import {Api} from "../../api/Api";
 
 export const productSlice = createSlice({
   name: "product",
@@ -10,7 +10,7 @@ export const productSlice = createSlice({
     data: null as IProduct[],
     error: null as string,
     currentProduct: null as currentProduct,
-    category: { gender: "woman" } as ICategory,
+    category: {gender: "woman"} as ICategory,
   },
   reducers: {
     addDataProducts: (state, action: PayloadAction<IProduct[]>) => {
@@ -28,6 +28,9 @@ export const productSlice = createSlice({
     setGender: (state, action: PayloadAction<Gender>) => {
       state.category.gender = action.payload;
     },
+    getPhotosProduct: (state, action: PayloadAction<photo[]>) => {
+      state.currentProduct.photos = action.payload;
+    }
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {
@@ -44,6 +47,7 @@ export const {
   setErrorMessage,
   setCurrentProduct,
   setGender,
+  getPhotosProduct
 } = productSlice.actions;
 
 export default productSlice.reducer;
@@ -78,21 +82,26 @@ export const saveNewProduct = (newProductData) => async (dispatch) => {
 
 export const fetchProduct =
   (idProduct: any): AppThunk =>
-  async (dispatch, getState) => {
-    const dataProduct: IProduct[] = getState().product.data;
-    let product = null;
-    if (!dataProduct) {
-      try {
-        product = await Api().product.findById(idProduct);
-      } catch (e) {
-        dispatch(setErrorMessage(e.response.data.message));
-        return {
-          notFound: true,
-        };
+    async (dispatch, getState) => {
+      const dataProduct: IProduct[] = getState().product.data;
+      let product = null;
+      if (!dataProduct) {
+        try {
+          product = await Api().product.findById(idProduct);
+        } catch (e) {
+          dispatch(setErrorMessage(e.response.data.message));
+          return {
+            notFound: true,
+          };
+        }
+      } else {
+        product = dataProduct.find((item) => item.id === +idProduct);
       }
-    } else {
-      product = dataProduct.find((item) => item.id === +idProduct);
-    }
-    dispatch(setCurrentProduct(product));
-    return product;
-  };
+      dispatch(setCurrentProduct(product));
+      try {
+        const photos = await Api().product.getPhotosProduct(+idProduct)
+        dispatch(getPhotosProduct(photos))
+      } catch (e) {
+        console.log("error photos");
+      }
+    };

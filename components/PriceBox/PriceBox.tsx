@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
+import { color } from "@mui/system";
 
 interface IPriceBoxProps {
   price: number;
@@ -17,14 +18,8 @@ export const PriceBox: NextPage<IPriceBoxProps> = ({ salePrice, price }) => {
         alignItems: "end",
       }}
     >
-      {salePrice && (
-        <Typography variant="h5" color="error">
-          {salePrice} грн.
-        </Typography>
-      )}
-      <Typography variant="body1" component="div">
-        {salePrice ? <s>{price} грн.</s> : `${price} грн.`}
-      </Typography>
+      {salePrice && <h2 style={{ color: "red" }}>{salePrice} грн.</h2>}
+      <h3>{salePrice ? <del>{price} грн.</del> : `${price} грн.`}</h3>
     </Box>
   );
 };

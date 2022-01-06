@@ -1,12 +1,10 @@
-import { Typography } from "@mui/material";
+import {Typography} from "@mui/material";
 import React from "react";
-import { NextPage } from "next";
-import { PriceBox } from "../../PriceBox/PriceBox";
-import { useRouter } from "next/dist/client/router";
-import { DeleteProduct } from "../../deleteProduct/DeleteProduct";
-import CreateNewDish from "../../CreateNewDish/CreateNewDish";
-import { UpdateProduct } from "../../updateProduct/updateProduct";
-import { AdminWrapper } from "../../adminWrapper/AdminWrapper";
+import {NextPage} from "next";
+import {PriceBox} from "../../PriceBox/PriceBox";
+import {DeleteProduct} from "../../deleteProduct/DeleteProduct";
+import {UpdateProduct} from "../../updateProduct/updateProduct";
+import {AdminWrapper} from "../../adminWrapper/AdminWrapper";
 import style from "../../../styles/Product.module.scss";
 
 interface IProductInfo {
@@ -23,7 +21,7 @@ interface IProductInfo {
 }
 
 const ProductInfo: NextPage<IProductInfo> = (props) => {
-  const { name, price, salePrice, description, id, ...infoDataProduct } = props;
+  const {name, price, salePrice, description, id, ...infoDataProduct} = props;
 
   const createInfoBlock = (infoDataProduct) => {
     let data = [];
@@ -61,8 +59,11 @@ const ProductInfo: NextPage<IProductInfo> = (props) => {
         <Typography variant="body1" component="p">
           {description}
         </Typography>
-        <PriceBox price={price} salePrice={salePrice} />
-        <AdminWrapper id={+id} />
+        <PriceBox price={price} salePrice={salePrice}/>
+        <AdminWrapper>
+          <DeleteProduct id={+id}/>
+          <UpdateProduct idProduct={+id}/>
+        </AdminWrapper>
       </div>
     </div>
   );

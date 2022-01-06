@@ -16,9 +16,9 @@ function CardsProduct() {
       {data.map((product) => {
         const { id, cover, size, name, salePrice, price } = product;
         return (
-          <Card key={id} className={classes.root}>
-            <Link href={"/product/" + id}>
-              <a>
+          <Link key={id} href={"/product/" + id}>
+            <a>
+              <Card className={classes.root}>
                 <CardActionArea>
                   <CardMedia
                     className={classes.media}
@@ -28,18 +28,19 @@ function CardsProduct() {
                     alt={name}
                   />
                 </CardActionArea>
-              </a>
-            </Link>
-            <CardContent>
-              <Typography gutterBottom variant="h6" component="div">
-                {name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                size: {size}
-              </Typography>
-              <PriceBox price={price} salePrice={salePrice} />
-            </CardContent>
-          </Card>
+
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="div">
+                    {name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    size: {size}
+                  </Typography>
+                  <PriceBox price={price} salePrice={salePrice} />
+                </CardContent>
+              </Card>
+            </a>
+          </Link>
         );
       })}
     </div>

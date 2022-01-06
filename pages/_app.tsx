@@ -7,6 +7,7 @@ import { theme } from "./_document";
 import { addUserData } from "../redux/slices/auth-reducer";
 import nookies from "nookies";
 import { Api } from "../api/Api";
+import { addCartData } from "../redux/slices/cart-reducer";
 
 const WrappedApp = ({ Component, pageProps }: AppProps) => {
   return (
@@ -24,7 +25,9 @@ WrappedApp.getInitialProps = wrapper.getInitialPageProps((store) =>
         const { token } = nookies.get(ctx);
 
         const userData = await Api(ctx).auth.authorization();
-        store.dispatch(addUserData(userData));
+        const { cart, ...userInfo } = userData;
+        store.dispatch(addCartData([...cart]));
+        store.dispatch(addUserData(userInfo));
       } catch (e) {
         console.log(e.config.headers);
       }

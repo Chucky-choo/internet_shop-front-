@@ -30,7 +30,7 @@ export const theme = createTheme({
       main: "rgba(0,4,12,0.87)",
     },
     secondary: {
-      main: "#ffffff",
+      main: "rgba(36,183,36,0.87)",
     },
   },
 });

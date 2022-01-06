@@ -5,6 +5,7 @@ import { IUserData } from "./ProductType";
 import { HYDRATE } from "next-redux-wrapper";
 import { Api } from "../../api/Api";
 import nookies from "nookies";
+import { addCartData } from "./cart-reducer";
 
 export const initialAuthState = {
   userData: null as IUserData | null,
@@ -39,8 +40,9 @@ export default authSlice.reducer;
 const thunkCreateUser = (request) => (dto) => async (dispatch) => {
   try {
     const response = await request(dto);
-    const { userData } = response.data;
-    dispatch(addUserData(userData));
+    const { cart, ...userInfo } = response.data.userData;
+    dispatch(addCartData([...cart]));
+    dispatch(addUserData(userInfo));
     dispatch(setErrorMessage(null));
 
     // Set

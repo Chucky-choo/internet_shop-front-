@@ -1,25 +1,31 @@
 import React from "react";
-import { Form } from "formik";
-import { Button, Grid } from "@mui/material";
+import {Form} from "formik";
+import {Button, Grid} from "@mui/material";
 import CustomizedInputBase from "../CustomizedInputBase/CustomizedInputBase";
 
-const DishForm = ({ handleClose, nameRightBtn }) => {
+const DishForm = ({handleClose, nameRightBtn, setPhotos}) => {
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhotos(e.target.files);
+  }
+
   return (
-    <Form autoComplete="off" style={{ width: 600, padding: 14 }}>
-      <CustomizedInputBase type="text" name="name" placeholder="назва" />
-      <CustomizedInputBase type="text" name="photos" placeholder="imageUrl" />
-      <CustomizedInputBase type="number" name="count" placeholder="кількість" />
+    <Form autoComplete="off" style={{width: 600, padding: 14}}>
+      <CustomizedInputBase type="text" name="name" placeholder="назва"/>
+      <p>Оберіть фото</p>
+      <input type='file' multiple accept='image/*' onChange={onChange}/>
+      <CustomizedInputBase type="number" name="count" placeholder="кількість"/>
       <CustomizedInputBase
         type="text"
         name="description"
         placeholder="опис"
         multiline={true}
       />
-      <CustomizedInputBase type="text" name="weight" placeholder="вага" />
-      <CustomizedInputBase type="text" name="size" placeholder="розміри" />
-      <CustomizedInputBase type="text" name="color" placeholder="колір" />
-      <CustomizedInputBase type="text" name="material" placeholder="матеріал" />
-      <CustomizedInputBase type="number" name="price" placeholder="ціна" />
+      <CustomizedInputBase type="text" name="weight" placeholder="вага"/>
+      <CustomizedInputBase type="text" name="size" placeholder="розміри"/>
+      <CustomizedInputBase type="text" name="color" placeholder="колір"/>
+      <CustomizedInputBase type="text" name="material" placeholder="матеріал"/>
+      <CustomizedInputBase type="number" name="price" placeholder="ціна"/>
       <CustomizedInputBase
         type="number"
         name="salePrice"
