@@ -3,12 +3,14 @@ import authReducer from "./slices/auth-reducer";
 import productReducer from "./slices/product-reducer";
 import { createWrapper, Context } from "next-redux-wrapper";
 import cartReducer from "./slices/cart-reducer";
+import ordersReducer from "./slices/orders-reducer";
 
 export const store = configureStore({
   reducer: {
     product: productReducer,
     user: authReducer,
     cart: cartReducer,
+    orders: ordersReducer,
   },
 });
 

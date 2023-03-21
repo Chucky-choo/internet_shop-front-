@@ -31,15 +31,18 @@ export interface currentProduct extends IProduct {
   photos: photo[];
 }
 
-export type Gender = "man" | "woman";
+export enum Gender {
+  Man = 'man',
+  Woman = 'woman',
+}
 
 export interface ICategory {
   gender: Gender;
 }
 
 export enum Role {
-  admin = "ADMIN",
-  user = "USER",
+  admin = 'ADMIN',
+  user = 'USER',
 }
 
 export interface IRole {

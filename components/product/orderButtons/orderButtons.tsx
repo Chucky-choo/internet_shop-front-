@@ -1,42 +1,41 @@
-import { NextPage } from "next";
-import Button from "@mui/material/Button";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addPositionsToCart } from "../../../redux/slices/cart-reducer";
+import { NextPage } from 'next';
+import Button from '@mui/material/Button';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { addPositionsToCart } from '../../../redux/slices/cart-reducer';
+import { useEffect, useState } from 'react';
 
 interface IOrderButtons {
   idProduct: number;
+  idUser: number | undefined;
 }
 
-export const OrderButtons: NextPage<IOrderButtons> = ({ idProduct }) => {
+export const OrderButtons: NextPage<IOrderButtons> = ({ idProduct, idUser }) => {
   const dispatch = useAppDispatch();
+  const { data } = useAppSelector(store => store.cart);
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const idUser = useAppSelector((store) => store.user.userData.id);
-  const { data } = useAppSelector((store) => store.cart);
+  useEffect(() => {
+    if (data) {
+      data.forEach(item => {
+        if (item.id === idProduct) {
+          setIsDisabled(true);
+        }
+      });
+    }
+  }, []);
 
   const putInTheCart = () => {
     dispatch(addPositionsToCart({ idProduct, idUser }));
   };
 
-  let isDisabled = false;
-  data.forEach((item) => {
-    if (item.id === idProduct) {
-      isDisabled = true;
-    }
-  });
-
   return (
-    <div style={{ display: "flex", justifyContent: "space-around" }}>
-      <Button
-        onClick={putInTheCart}
-        disabled={isDisabled}
-        color="secondary"
-        variant="outlined"
-      >
+    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <Button onClick={putInTheCart} disabled={isDisabled} color='secondary' variant='outlined'>
         Додати в кошик
       </Button>
-      <Button color="secondary" variant="contained">
-        Придбати в один клік
-      </Button>
+      {/*<Button color="secondary" variant="contained">*/}
+      {/*  Придбати в один клік*/}
+      {/*</Button>*/}
     </div>
   );
 };

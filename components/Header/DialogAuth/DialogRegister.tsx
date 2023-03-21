@@ -5,15 +5,13 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import * as React from "react";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GoogleIcon from "@mui/icons-material/Google";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Form, Formik } from "formik";
 import CustomizedInputBase from "../../CustomizedInputBase/CustomizedInputBase";
 import { RegisterFormValidation } from "./FormsValidation";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { DialogHeader } from "./dialogHeader/HeaderDialog";
-import { getUserData, registerUser } from "../../../redux/slices/auth-reducer";
+import { registerUser } from "../../../redux/slices/auth-reducer";
 import { Typography } from "@mui/material";
 
 interface IDialogRegister {
@@ -36,6 +34,15 @@ export const DialogRegister: FC<IDialogRegister> = ({
     setRegister(false);
   };
 
+  const submit = async (values, { resetForm }) => {
+    let res = await dispatch(registerUser(values));
+    debugger;
+    if (res === "response") {
+      handleClose();
+      resetForm();
+    }
+  };
+
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={handleClose}>
       <Formik
@@ -47,13 +54,7 @@ export const DialogRegister: FC<IDialogRegister> = ({
           confirmPassword: "",
         }}
         validationSchema={RegisterFormValidation}
-        onSubmit={async (values, { resetForm }) => {
-          let res = await dispatch(registerUser(values));
-          if (res === "response") {
-            handleClose();
-            resetForm();
-          }
-        }}
+        onSubmit={submit}
       >
         <Form>
           <DialogHeader text={"Регістрація"} handleClose={handleClose} />
@@ -64,7 +65,7 @@ export const DialogRegister: FC<IDialogRegister> = ({
             <CustomizedInputBase
               type="string"
               name="fullName"
-              placeholder="ПІП*"
+              placeholder="ПІБ*"
             />
             <CustomizedInputBase
               type="email"

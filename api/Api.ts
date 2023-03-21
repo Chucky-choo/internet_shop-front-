@@ -5,12 +5,14 @@ import { userApi } from "./UserApi";
 import { productApi } from "./ProductApi";
 import { authApi } from "./authApi";
 import { cartApi } from "./CartApi";
+import { ordersApi } from "./OrderApi";
 
 export type ApiReturnType = {
   user: ReturnType<typeof userApi>;
   product: ReturnType<typeof productApi>;
   auth: ReturnType<typeof authApi>;
   cart: ReturnType<typeof cartApi>;
+  orders: ReturnType<typeof ordersApi>;
 };
 
 export const Api = (
@@ -31,5 +33,6 @@ export const Api = (
     product: productApi(instance),
     auth: authApi(instance),
     cart: cartApi(instance),
+    orders: ordersApi(instance),
   };
 };

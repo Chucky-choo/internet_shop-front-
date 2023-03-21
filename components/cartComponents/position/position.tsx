@@ -6,6 +6,7 @@ import * as React from "react";
 import Link from "next/link";
 import { pickUpFromTheCart } from "../../../redux/slices/cart-reducer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import s from "./position.module.scss";
 
 export interface IPositionProps {
   id: number;
@@ -33,19 +34,10 @@ export const Position: NextPage<IPositionProps> = ({
 
   return (
     <>
-      <Divider sx={{ height: 2 }} color={"black"} />
-      <div
-        style={{ display: "flex", justifyContent: "space-between", margin: 20 }}
-      >
+      <Divider color="black" />
+      <div className={s.position_wrapper}>
         <img src={cover} alt={name} width={155} height={220} />
-        <div
-          style={{
-            margin: 20,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-around",
-          }}
-        >
+        <div className={s.info}>
           <Link key={id} href={"/product/" + id}>
             <a>
               <h2>{name}</h2>

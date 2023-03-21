@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { HYDRATE } from "next-redux-wrapper";
-import { IProduct } from "./ProductType";
-import { AppThunk } from "../redux-store";
-import { Api } from "../../api/Api";
-import { productToBasketDto } from "../../api/CartApi";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
+import { IProduct } from '../Types/ProductType';
+import { AppThunk } from '../redux-store';
+import { Api } from '../../api/Api';
+import { productToBasketDto } from '../../api/CartApi';
 
 export const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState: {
     data: null as IProduct[],
   },
@@ -15,7 +15,7 @@ export const cartSlice = createSlice({
       state.data = action.payload;
     },
     deletePositions: (state, action: PayloadAction<number>) => {
-      state.data = state.data.filter((el) => el.id !== action.payload);
+      state.data = state.data.filter(el => el.id !== action.payload);
     },
     addPositions: (state, action: PayloadAction<IProduct>) => {
       state.data.push(action.payload);
@@ -36,17 +36,28 @@ export default cartSlice.reducer;
 //Thunks
 export const addPositionsToCart =
   (dto: productToBasketDto): AppThunk =>
-  async (dispatch) => {
+  async dispatch => {
     const product = await Api().cart.addProductToCart(dto);
     dispatch(addPositions(product));
   };
 
 export const pickUpFromTheCart =
   (dto: productToBasketDto): AppThunk =>
-  async (dispatch) => {
+  async dispatch => {
     try {
       await Api().cart.pickUpFromTheBasket(dto);
       dispatch(deletePositions(dto.idProduct));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+export const cleanTheBasket =
+  (idUser: number): AppThunk =>
+  async dispatch => {
+    try {
+      const userData = await Api().user.cleanTheBasket(idUser);
+      dispatch(addCartData(userData.cart));
     } catch (e) {
       console.log(e);
     }

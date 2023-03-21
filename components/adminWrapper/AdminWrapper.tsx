@@ -1,13 +1,13 @@
-import {useAppSelector} from "../../redux/hooks";
-import {Role} from "../../redux/slices/ProductType";
-import React, {FC} from "react";
+import { useAppSelector } from '../../redux/hooks';
+import { Role } from '../../redux/Types/ProductType';
+import React, { FC } from 'react';
 
 interface IAdmin {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-export const AdminWrapper: FC<IAdmin> = ({children}) => {
-  const value = useAppSelector((state) => state.user.userData?.roles[0].value);
+export const AdminWrapper: FC<IAdmin> = ({ children }) => {
+  const value = useAppSelector(state => state.user.userData?.roles[0].value);
 
   if (value !== Role.admin) {
     return null;
@@ -15,11 +15,11 @@ export const AdminWrapper: FC<IAdmin> = ({children}) => {
     return (
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           height: 250,
-          justifyContent: "space-around",
-          border: "3px solid blue",
+          justifyContent: 'space-around',
+          border: '3px solid blue',
           padding: 14,
         }}
       >

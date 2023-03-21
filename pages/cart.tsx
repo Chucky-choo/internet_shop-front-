@@ -5,20 +5,17 @@ import { useAppSelector } from "../redux/hooks";
 import { Position } from "../components/cartComponents/position/position";
 import Divider from "@mui/material/Divider";
 import * as React from "react";
-import Link from "next/link";
-import { Button } from "@mui/material";
 import { EmptyCart } from "../components/cartComponents/emptyCart/EmptyCart";
+import { Sum } from "../components/cartComponents/sum/sum";
+import { Ordering } from "../components/cartComponents/ordering/Ordering";
 
 const Cart: NextPage = () => {
+  console.log("Cart");
   const { data } = useAppSelector((store) => store.cart);
-
-  if (data.length === 0) {
-    return <EmptyCart />;
-  }
 
   return (
     <MainLayout title={"cart"}>
-      {data.length === 0 ? (
+      {!data || data.length === 0 ? (
         <EmptyCart />
       ) : (
         <>
@@ -39,24 +36,9 @@ const Cart: NextPage = () => {
                 />
               );
             })}
-            <Divider sx={{ height: 2 }} color={"black"} />
-            <Typography
-              variant="h5"
-              align="center"
-              sx={{ marginTop: 1, color: "gray" }}
-            >
-              СУМА ДО ОПЛАТИ ЗА ТОВАР
-            </Typography>
-            <Typography variant="h6" align="center" sx={{ marginTop: 1 }}>
-              {data.reduce(
-                (sum, product) =>
-                  product.salePrice
-                    ? product.salePrice + sum
-                    : product.price + sum,
-                0
-              )}{" "}
-              грн
-            </Typography>
+            <Divider color="black" />
+            <Sum data={data} />
+            <Ordering productIdArr={data.map((product) => product.id)} />
           </div>
         </>
       )}

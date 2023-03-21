@@ -1,6 +1,6 @@
-import { AxiosInstance } from "axios";
-import { IProduct } from "../redux/slices/ProductType";
-import { IUserDataAndCart } from "./authApi";
+import { AxiosInstance } from 'axios';
+import { IProduct } from '../redux/Types/ProductType';
+import { IUserDataAndCart } from './authApi';
 
 export type productToBasketDto = {
   idUser: number;
@@ -9,14 +9,11 @@ export type productToBasketDto = {
 
 export const cartApi = (instance: AxiosInstance) => ({
   async addProductToCart(dto: productToBasketDto) {
-    const { data } = await instance.patch<IProduct>("users/addProduct", dto);
+    const { data } = await instance.patch<IProduct>('users/addProduct', dto);
     return data;
   },
   async pickUpFromTheBasket(dto: productToBasketDto) {
-    const { data } = await instance.patch<IUserDataAndCart>(
-      "users/pickUpFromTheBasket",
-      dto
-    );
+    const { data } = await instance.patch<IUserDataAndCart>('users/pickUpFromTheBasket', dto);
     return data;
   },
 });

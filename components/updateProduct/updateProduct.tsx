@@ -1,21 +1,22 @@
-import {NextPage} from "next";
-import {Button, Dialog} from "@mui/material";
-import {Formik} from "formik";
-import {Validatione} from "../CreateNewDish/Validatione";
+import { NextPage } from "next";
+import { Button, Dialog } from "@mui/material";
+import { Formik } from "formik";
+import { Validatione } from "../CreateNewDish/Validatione";
 import DishForm from "../CreateNewDish/DishForm";
-import React, {useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {Api} from "../../api/Api";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { Api } from "../../api/Api";
+import { setCurrentProduct } from "../../redux/slices/product-reducer";
 
 interface IUpdateProductProps {
   idProduct: number | null;
 }
 
-export const UpdateProduct: NextPage<IUpdateProductProps> = ({idProduct}) => {
+export const UpdateProduct: NextPage<IUpdateProductProps> = ({ idProduct }) => {
   const dispatch = useAppDispatch();
 
-  const {currentProduct} = useAppSelector((store) => store.product);
-  const {id, ...oldDataProduct} = currentProduct;
+  const { currentProduct } = useAppSelector((store) => store.product);
+  const { id, ...oldDataProduct } = currentProduct;
 
   const [open, setOpen] = useState(false);
   const [photoFiles, setPhotoFiles] = useState(null);
@@ -28,7 +29,7 @@ export const UpdateProduct: NextPage<IUpdateProductProps> = ({idProduct}) => {
     setOpen(false);
   };
 
-  const {cover, photos, ...initialValues} = oldDataProduct
+  const { cover, photos, ...initialValues } = oldDataProduct;
 
   return (
     <div>
@@ -44,14 +45,20 @@ export const UpdateProduct: NextPage<IUpdateProductProps> = ({idProduct}) => {
           <Formik
             initialValues={initialValues}
             validationSchema={Validatione}
-            onSubmit={(values, {setSubmitting, resetForm}) => {
-              Api().product.update(idProduct, values);
+            onSubmit={async (values, { setSubmitting, resetForm }) => {
+              const res = await Api().product.update(idProduct, values);
+              const updatedProduct = { ...res, photos };
+              dispatch(setCurrentProduct(updatedProduct));
               setSubmitting(false);
               handleClose();
               resetForm();
             }}
           >
-            <DishForm handleClose={handleClose} nameRightBtn={"Обновити"} setPhotos={setPhotoFiles}/>
+            <DishForm
+              handleClose={handleClose}
+              nameRightBtn={"Обновити"}
+              setPhotos={setPhotoFiles}
+            />
           </Formik>
         }
       </Dialog>

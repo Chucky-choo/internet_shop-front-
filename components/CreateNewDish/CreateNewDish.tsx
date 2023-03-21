@@ -1,11 +1,10 @@
-import React, {useState} from "react";
-import {Formik} from "formik";
-import {Validatione} from "./Validatione";
-import DishForm from "./DishForm";
-import {Button, Dialog} from "@mui/material";
-import {saveNewProduct} from "../../redux/slices/product-reducer";
-import {useAppDispatch} from "../../redux/hooks";
-import {parseCookies} from "nookies";
+import React, { useState } from 'react';
+import { Formik } from 'formik';
+import { Validatione } from './Validatione';
+import DishForm from './DishForm';
+import { Button, Dialog } from '@mui/material';
+import { saveNewProduct } from '../../redux/slices/product-reducer';
+import { useAppDispatch } from '../../redux/hooks';
 
 const CreateNewDish = () => {
   const dispatch = useAppDispatch();
@@ -24,48 +23,45 @@ const CreateNewDish = () => {
   const onSubmit = (values, setSubmitting, resetForm) => {
     const formData = new FormData();
     for (let x = 0; x < photoFiles.length; x++) {
-      formData.append("photos", photoFiles[x]);
+      formData.append('photos', photoFiles[x]);
     }
     for (let key in values) {
       if (values[key] !== null) {
-        formData.append(key, values[key])
+        formData.append(key, values[key]);
       }
     }
     dispatch(saveNewProduct(formData));
     setSubmitting(false);
     handleClose();
     resetForm();
-  }
+  };
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant='contained' color='primary' onClick={handleClickOpen}>
         добавити товар
       </Button>
-      <Dialog
-        open={open}
-        title={"Here you can create your own commodity"}
-        onClose={handleClose}
-      >
+      <Dialog open={open} title={'Here you can create your own commodity'} onClose={handleClose}>
         {
           <Formik
             initialValues={{
-              name: "",
+              name: '',
               count: 0,
-              description: "",
+              description: '',
               weight: null,
-              size: "",
-              color: "",
+              size: '',
+              color: '',
               material: null,
               price: null,
               salePrice: null,
+              gender: null,
             }}
             validationSchema={Validatione}
-            onSubmit={(values, {setSubmitting, resetForm}) => {
-              onSubmit(values, setSubmitting, resetForm)
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              onSubmit(values, setSubmitting, resetForm);
             }}
           >
-            <DishForm handleClose={handleClose} nameRightBtn={"Add"} setPhotos={setPhotoFiles}/>
+            <DishForm handleClose={handleClose} nameRightBtn={'Add'} setPhotos={setPhotoFiles} />
           </Formik>
         }
       </Dialog>

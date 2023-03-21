@@ -2,15 +2,12 @@
   margin-bottom: 20px;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, 300px);
   gap: 24px;
 }
 
 .root {
-  min-height: 390px;
-  min-width: 300px;
-  max-width: 400px;
-  max-height: 650px;
+  height: 640px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,10 +16,9 @@
 @media (max-width: 663px) {
   .root {
     margin: 0 auto;
-    width: 85%
+    width: 85%;
   }
 }
-
 
 .media {
   transition: all 0.5s;

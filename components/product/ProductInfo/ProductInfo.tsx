@@ -1,11 +1,11 @@
-import {Typography} from "@mui/material";
-import React from "react";
-import {NextPage} from "next";
-import {PriceBox} from "../../PriceBox/PriceBox";
-import {DeleteProduct} from "../../deleteProduct/DeleteProduct";
-import {UpdateProduct} from "../../updateProduct/updateProduct";
-import {AdminWrapper} from "../../adminWrapper/AdminWrapper";
-import style from "../../../styles/Product.module.scss";
+import { Typography } from '@mui/material';
+import React from 'react';
+import { NextPage } from 'next';
+import { PriceBox } from '../../PriceBox/PriceBox';
+import { DeleteProduct } from '../../deleteProduct/DeleteProduct';
+import { UpdateProduct } from '../../updateProduct/updateProduct';
+import { AdminWrapper } from '../../adminWrapper/AdminWrapper';
+import style from '../../../styles/Product.module.scss';
 
 interface IProductInfo {
   id: number;
@@ -20,21 +20,15 @@ interface IProductInfo {
   salePrice: number;
 }
 
-const ProductInfo: NextPage<IProductInfo> = (props) => {
-  const {name, price, salePrice, description, id, ...infoDataProduct} = props;
+const ProductInfo: NextPage<IProductInfo> = props => {
+  const { name, price, salePrice, description, id, ...infoDataProduct } = props;
 
-  const createInfoBlock = (infoDataProduct) => {
+  const createInfoBlock = infoDataProduct => {
     let data = [];
     for (let key in infoDataProduct) {
       if (infoDataProduct.hasOwnProperty(key)) {
         data.push(
-          <Typography
-            key={key}
-            noWrap
-            variant="body1"
-            color="textSecondary"
-            component="p"
-          >
+          <Typography key={key} noWrap variant='body1' color='textSecondary' component='p'>
             {`${key} : ${infoDataProduct[key]}`}
           </Typography>
         );
@@ -46,23 +40,17 @@ const ProductInfo: NextPage<IProductInfo> = (props) => {
   return (
     <div className={style.info}>
       <div>
-        <Typography
-          align="center"
-          noWrap
-          gutterBottom
-          variant="h3"
-          component="h2"
-        >
+        <Typography align='center' noWrap gutterBottom variant='h3' component='h2'>
           {name}
         </Typography>
         {createInfoBlock(infoDataProduct)}
-        <Typography variant="body1" component="p">
+        <Typography variant='body1' component='p'>
           {description}
         </Typography>
-        <PriceBox price={price} salePrice={salePrice}/>
+        <PriceBox price={price} salePrice={salePrice} />
         <AdminWrapper>
-          <DeleteProduct id={+id}/>
-          <UpdateProduct idProduct={+id}/>
+          <DeleteProduct id={+id} />
+          <UpdateProduct idProduct={+id} />
         </AdminWrapper>
       </div>
     </div>
