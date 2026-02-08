@@ -1,11 +1,11 @@
-import axios from "axios";
-import nookies, { parseCookies } from "nookies";
-import { NextPageContext, GetServerSidePropsContext } from "next";
-import { userApi } from "./UserApi";
-import { productApi } from "./ProductApi";
-import { authApi } from "./authApi";
-import { cartApi } from "./CartApi";
-import { ordersApi } from "./OrderApi";
+import axios from 'axios';
+import nookies, { parseCookies } from 'nookies';
+import { NextPageContext, GetServerSidePropsContext } from 'next';
+import { userApi } from './UserApi';
+import { productApi } from './ProductApi';
+import { authApi } from './authApi';
+import { cartApi } from './CartApi';
+import { ordersApi } from './OrderApi';
 
 export type ApiReturnType = {
   user: ReturnType<typeof userApi>;
@@ -22,10 +22,10 @@ export const Api = (
   const token = cookies.token;
 
   const instance = axios.create({
-    baseURL: "http://localhost:7777",
+    baseURL: 'http://localhost:7777',
     headers: {
-      Authorization: "Bearer " + token,
-    },
+      Authorization: 'Bearer ' + token
+    }
   });
 
   return {
@@ -33,6 +33,6 @@ export const Api = (
     product: productApi(instance),
     auth: authApi(instance),
     cart: cartApi(instance),
-    orders: ordersApi(instance),
+    orders: ordersApi(instance)
   };
 };

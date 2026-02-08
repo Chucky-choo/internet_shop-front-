@@ -10,7 +10,6 @@ import { Sum } from "../components/cartComponents/sum/sum";
 import { Ordering } from "../components/cartComponents/ordering/Ordering";
 
 const Cart: NextPage = () => {
-  console.log("Cart");
   const { data } = useAppSelector((store) => store.cart);
 
   return (

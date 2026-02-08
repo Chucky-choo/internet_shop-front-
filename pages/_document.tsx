@@ -26,10 +26,11 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      main: 'rgba(0,4,12,0.87)',
+      main: 'rgba(21,2,2)',
     },
     secondary: {
-      main: 'rgba(36,183,36,0.87)',
+      main: 'rgba(255,195,4)',
+      contrastText: '#fff',
     },
   },
 });

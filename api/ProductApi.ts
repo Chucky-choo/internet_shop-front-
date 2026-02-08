@@ -8,19 +8,19 @@ interface whereGetRequest {
   order?: Object;
 }
 
+const LIMIT = 20
+
 export const productApi = (instance: AxiosInstance) => ({
   async create(dto) {
     const { data } = await instance.post<IProduct>('/product', dto);
     return data;
   },
-  async findAll(whereObj: whereGetRequest = { take: 20 }) {
+  async findAll(whereObj: whereGetRequest = { take: LIMIT }) {
     const { data } = await instance.post<IProduct[]>('/product/getFiltered', whereObj);
-    console.log('request findAll', data);
     return data;
   },
   async findById(id) {
     const { data } = await instance.get<IProduct>(`/product/${id}`);
-    console.log('request ById');
     return data;
   },
   async update(id, dto) {
@@ -38,7 +38,6 @@ export const productApi = (instance: AxiosInstance) => ({
   },
   async getDiscountList(gender) {
     const { data } = await instance.get<IProduct[]>(`/product/discounts/${gender}`);
-    console.log(data);
     return data;
   },
 });

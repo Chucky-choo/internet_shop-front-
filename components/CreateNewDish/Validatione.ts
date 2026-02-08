@@ -9,10 +9,10 @@ const yupStringStandard = (min, max) => {
 };
 
 export const Validatione = yup.object().shape({
-  name: yupStringStandard(2, 25),
+  name: yupStringStandard(2, 100),
   count: yup.number().max(1000, 'too many').required('required').positive().integer(),
   description: yupStringStandard(10, 900),
-  size: yupStringStandard(2, 16),
+  size: yupStringStandard(2, 100),
   weight: yup.string().min(3, 'not enough characters').max(10, 'too many characters').nullable(),
   color: yupStringStandard(3, 15),
   material: yup.string().min(3, 'not enough characters').max(10, 'too many characters').nullable(),

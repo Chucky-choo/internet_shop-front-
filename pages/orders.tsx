@@ -9,22 +9,22 @@ import Divider from '@mui/material/Divider';
 
 export const Orders: NextPage = () => {
   const dispatch = useAppDispatch();
-  const { id } = useAppSelector(store => store.user.userData);
+  const { id, data } = useAppSelector(({ user, orders }) => ({
+    id: user.userData.id,
+    data: orders.data
+  }));
 
   useEffect(() => {
     dispatch(setOrdersData(id));
   }, []);
 
-  const { data } = useAppSelector(store => store.orders);
-  console.log(data);
-
   return (
     <MainLayout title={'замовлення'}>
       {!data || data.length === 0 ? (
-        <EmptyCart />
+        <EmptyCart title='Ви ще не здійснили жодної покупки' />
       ) : (
         <>
-          <Typography variant='h4' align='center' sx={{ marginTop: 3 }}>
+          <Typography variant="h4" align="center" sx={{ marginTop: 3 }}>
             Ваші замовлення
           </Typography>
           <div style={{ margin: '20px' }}>
@@ -39,7 +39,7 @@ export const Orders: NextPage = () => {
                 </div>
               );
             })}
-            <Divider color='black' />
+            <Divider color="black" />
           </div>
         </>
       )}

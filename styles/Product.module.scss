@@ -2,7 +2,7 @@
   padding: 20px;
   display: flex;
   height: 100%;
-  max-height: 600px;
+  //max-height: 600px;
 }
 
 .img {
@@ -20,6 +20,7 @@
 .picture {
   margin: 6px;
   max-height: 60px;
+  max-width: 100px;
 }
 
 .info {
@@ -30,15 +31,45 @@
   padding: 32px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1105px) {
   .root {
     flex-direction: column;
     height: auto;
   }
-  .img {
-    min-height: 400px;
-    min-width: calc(100% - 20px);
+
+  .wrapper_picture {
+    flex-direction: row;
+    overflow: hidden;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    max-height: 600px;
+    background-color: #eee;
+    padding: 0;
+
+    .picture {
+      margin: 0;
+      width: 400px;
+      height: 600px;
+      max-width: 400px;
+      max-height: 600px;
+    }
   }
+
+  .img {
+    display: none;
+  }
+
+}
+
+@media (max-width: 600px) {
+  //.root {
+  //  flex-direction: column;
+  //  height: auto;
+  //}
+  //.img {
+  //  min-height: 400px;
+  //  min-width: calc(100% - 20px);
+  //}
   .info {
     padding: 20px 0;
   }

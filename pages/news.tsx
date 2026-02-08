@@ -4,18 +4,21 @@ import React, { useEffect } from 'react';
 import { setOrdersData } from '../redux/slices/orders-reducer';
 import { MainLayout } from '../layouts/MainLayout';
 import { EmptyCart } from '../components/cartComponents/emptyCart/EmptyCart';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 
 export const News: NextPage = () => {
   const dispatch = useAppDispatch();
-  const { id } = useAppSelector(store => store.user.userData);
+  const { id, data } = useAppSelector(({ user, orders }) => ({
+    id: user?.userData?.id,
+    data: orders?.data
+  }));
 
   useEffect(() => {
-    dispatch(setOrdersData(id));
+    //??
+    if (id) {
+      dispatch(setOrdersData(id));
+    }
   }, []);
 
-  const { data } = useAppSelector(store => store.orders);
   console.log(data);
 
   return (

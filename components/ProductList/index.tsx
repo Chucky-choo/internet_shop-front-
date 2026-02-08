@@ -12,6 +12,8 @@ import { PriceBox } from '../PriceBox/PriceBox';
 export const ProductsList: FC = () => {
   const data = useAppSelector(store => store.product.data);
 
+  if(!data) return null
+  
   return (
     <div className={classes.container}>
       {data.map(product => {

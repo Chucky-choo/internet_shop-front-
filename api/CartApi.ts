@@ -5,6 +5,7 @@ import { IUserDataAndCart } from './authApi';
 export type productToBasketDto = {
   idUser: number;
   idProduct: number;
+  size: string
 };
 
 export const cartApi = (instance: AxiosInstance) => ({

@@ -32,8 +32,8 @@ export const { addOrdersData } = cartSlice.actions;
 export default cartSlice.reducer;
 
 //Thunks
-export const setOrdersData = dto => async dispatch => {
-  const product = await Api().orders.getOrdersUser(dto);
+export const setOrdersData = id => async dispatch => {
+  const product = await Api().orders.getOrdersUser(id);
   dispatch(addOrdersData(product));
 };
 

@@ -1,21 +1,25 @@
-import { NextPage } from "next";
-import Typography from "@mui/material/Typography";
-import Link from "next/link";
-import { Button } from "@mui/material";
-import * as React from "react";
+import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import { Button } from '@mui/material';
+import * as React from 'react';
+import { FC } from 'react';
 
-export const EmptyCart: NextPage = () => {
+interface IPicturesProps {
+  title?: string;
+}
+
+export const EmptyCart: FC<IPicturesProps> = ({ title = 'Корзина поки що пуста 😿' }) => {
   return (
     <>
       <Typography
         variant="h5"
         align="center"
-        sx={{ marginTop: 1, color: "gray" }}
+        sx={{ marginTop: 1, color: 'gray' }}
       >
-        Корзина поки що пуста 😿
+        {title}
       </Typography>
-      <div style={{ display: "flex", justifyContent: "center", margin: 25 }}>
-        <Link href={"/"}>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: 25 }}>
+        <Link href={'/'}>
           <a>
             <Button color="secondary" variant="contained">
               повернутись на головну

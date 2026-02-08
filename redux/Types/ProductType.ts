@@ -22,6 +22,11 @@ export interface IProduct {
   salePrice: number;
 }
 
+export type productToBasket = {
+  idProduct: number;
+  size: string;
+};
+
 export type photo = {
   id: number;
   url: string;

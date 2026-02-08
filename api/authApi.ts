@@ -1,13 +1,14 @@
-import { IProduct, IUserData } from '../redux/Types/ProductType';
+import { IUserData, productToBasket } from '../redux/Types/ProductType';
 import { AxiosInstance } from 'axios';
 
 export interface IUserDataAndCart extends IUserData {
-  cart: IProduct[];
+  cart: productToBasket[];
 }
 
 export const authApi = (instance: AxiosInstance) => ({
   async login(loginDto: { phoneNumber: string; password: string }) {
     const data = await instance.post('/auth/login', loginDto);
+    console.log('/auth/login', data)
     return data;
   },
 
@@ -18,6 +19,7 @@ export const authApi = (instance: AxiosInstance) => ({
 
   async authorization() {
     const { data } = await instance.get<IUserDataAndCart>('/auth/profile');
+    console.log('/auth/profile', data)
     return data;
   },
 });

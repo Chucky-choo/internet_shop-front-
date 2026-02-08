@@ -1,23 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import { IProduct } from '../Types/ProductType';
 import { AppThunk } from '../redux-store';
 import { Api } from '../../api/Api';
 import { productToBasketDto } from '../../api/CartApi';
+import { productToBasket } from '../Types/ProductType';
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    data: null as IProduct[],
+    counter: 0,
+    data: null as productToBasket[],
   },
   reducers: {
-    addCartData: (state, action: PayloadAction<IProduct[] | null>) => {
+    addCartData: (state, action: PayloadAction<productToBasket[] | null>) => {
       state.data = action.payload;
+      state.counter++
     },
     deletePositions: (state, action: PayloadAction<number>) => {
-      state.data = state.data.filter(el => el.id !== action.payload);
+      state.data = state.data.filter(el => el.idProduct !== action.payload);
     },
-    addPositions: (state, action: PayloadAction<IProduct>) => {
+    addPositions: (state, action: PayloadAction<productToBasket>) => {
+      if (!state.data) {
+        state.data = [];
+      }
       state.data.push(action.payload);
     },
   },
@@ -35,10 +40,15 @@ export default cartSlice.reducer;
 
 //Thunks
 export const addPositionsToCart =
-  (dto: productToBasketDto): AppThunk =>
-  async dispatch => {
-    const product = await Api().cart.addProductToCart(dto);
-    dispatch(addPositions(product));
+  (dto: productToBasket): AppThunk =>
+  async (dispatch, getState) => {
+    const idUser = getState().user.userData?.id;
+    if (idUser) {
+      await Api().cart.addProductToCart({ ...dto, idUser });
+    } else {
+      
+    }
+    dispatch(addPositions(dto));
   };
 
 export const pickUpFromTheCart =
